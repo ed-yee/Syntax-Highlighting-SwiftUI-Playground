@@ -27,7 +27,7 @@ struct CodeBlockView: View, SearchSetData {
 
         if !showLineNumbers && rows.count == 0 {
             // Create a single element array
-            codeLines = [Substring(code)]
+            self.codeLines = [Substring(code)]
         } else {
             // Split the codes into individual lines
             self.codeLines = code.split(separator: /\n/)
