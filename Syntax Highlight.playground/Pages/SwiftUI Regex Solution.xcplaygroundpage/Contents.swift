@@ -12,9 +12,6 @@ struct CodeBlockView: View, SearchSetData {
          highlightAt: [Highlight]? = nil,
          showLineNumbers: Bool = false) {
         
-        // Split the codes into individual lines
-        self.codeLines = code.split(separator: /\n/)
-        
         // Collect all highlight row numbers
         var rows: Set<Int> = []
         if let lineNumbers = highlightAt {
@@ -27,6 +24,14 @@ struct CodeBlockView: View, SearchSetData {
         self.highlightRows = rows
         
         self.showLineNumber = showLineNumbers
+
+        if !showLineNumbers && rows.count == 0 {
+            // Create a single element array
+            codeLines = [Substring(code)]
+        } else {
+            // Split the codes into individual lines
+            self.codeLines = code.split(separator: /\n/)
+        }
     }
     
     /// Apply text color against each matching results
@@ -118,6 +123,8 @@ struct MasterPageView: View {
     var body: some View {
         VStack(alignment: .leading) {
             CodeBlockView(code: Sample.data.code)
+            CodeBlockView(code: Sample.data.code,
+                          showLineNumbers: true)
             CodeBlockView(code: Sample.data.code,
                           highlightAt: Sample.data.rows)
             CodeBlockView(code: Sample.data.code,

@@ -8,9 +8,9 @@ struct CodeBlockView: View, SearchSetData {
     private let highlightRows: Set<Int>
     private let showLineNumber: Bool
     
-    init(code: String, highlightAt: [Highlight]? = nil, showLineNumbers: Bool = false) {
-        // Split the codes into individual lines
-        self.codeLines = code.split(separator: /\n/)
+    init(code: String,
+         highlightAt: [Highlight]? = nil,
+         showLineNumbers: Bool = false) {
         
         // Collect all highlight row numbers
         var rows: Set<Int> = []
@@ -24,6 +24,14 @@ struct CodeBlockView: View, SearchSetData {
         self.highlightRows = rows
         
         self.showLineNumber = showLineNumbers
+        
+        if !showLineNumbers && rows.count == 0 {
+            // Create a single element array
+            codeLines = [Substring(code)]
+        } else {
+            // Split the codes into individual lines
+            self.codeLines = code.split(separator: /\n/)
+        }
     }
     
     /// Apply text color against each matching results
