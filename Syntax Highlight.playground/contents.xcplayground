@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' buildActiveScheme='true' importAppTypes='true'>
+    <pages>
+        <page name='SwiftUI WIth UILabel Solution'/>
+        <page name='SwiftUI Regex Solution'/>
+        <page name='SwiftUI NSRegularExpression Solution'/>
+    </pages>
+</playground>
