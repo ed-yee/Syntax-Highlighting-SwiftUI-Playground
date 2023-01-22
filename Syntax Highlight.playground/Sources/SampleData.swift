@@ -57,5 +57,15 @@ func makeUIView(context: Context) -> UILabel {
 }
 """#, rowsToHighlight: [Highlight(rangeOf: 5...6)])
     
+    static let dataset3 = SampleDataSet(code: "var a = String(\"Hello\")",
+                                        rowsToHighlight: [Highlight(1)])
+    
+    static let dataset4 = SampleDataSet(code: #"""
+guard let regex = try? Regex<Substring>(searchSet.regexPattern(word)) else {
+    fatalError("Failed to create regular expession")
+}
+"""#,
+                                        rowsToHighlight: [Highlight(2)])
+    
     static public let data = dataset2
 }
