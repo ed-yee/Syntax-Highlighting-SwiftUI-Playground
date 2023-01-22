@@ -8,6 +8,8 @@ struct CodeBlockView: View, SearchSetData {
     private let highlightRows: Set<Int>
     private let showLineNumber: Bool
     
+//    private let lineNumberColumnWidth: CGFloat
+    
     init(code: String,
          highlightAt: [Highlight]? = nil,
          showLineNumbers: Bool = false) {
@@ -26,12 +28,20 @@ struct CodeBlockView: View, SearchSetData {
         self.showLineNumber = showLineNumbers
 
         if !showLineNumbers && rows.count == 0 {
+            // Not going to show line numbers and highlighting rows
+            
             // Create a single element array
             self.codeLines = [Substring(code)]
         } else {
             // Split the codes into individual lines
             self.codeLines = code.split(separator: /\n/)
         }
+        
+        // This calculate the line number column width
+//        self.lineNumberColumnWidth = String(self.codeLines.count)
+//            .size(withAttributes: [.font: UIFont(name: "Menlo", size: 12)!])
+//            .width
+//            .rounded(.up)
     }
     
     /// Apply text color against each matching results
@@ -87,7 +97,7 @@ struct CodeBlockView: View, SearchSetData {
         VStack(alignment: .leading) {
             HStack(spacing: 5) {
                 if (self.showLineNumber) {
-                    VStack(alignment: .trailing) {
+                    VStack(alignment: .trailing, spacing: 0) {
                         ForEach(codeLines.indices, id: \.self) { idx in
                             Text("\(idx+1)")
                                 .font(.custom("Menlo", size: 12))
@@ -98,7 +108,7 @@ struct CodeBlockView: View, SearchSetData {
                     .background(.blue)
                 }
                 ScrollView(.horizontal) {
-                    VStack(spacing: 0) {
+                    VStack(alignment: .leading, spacing: 0) {
                         ForEach(codeLines.indices, id: \.self) { idx in
                             Text(syntaxHighlight(String(codeLines[idx])))
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -109,6 +119,27 @@ struct CodeBlockView: View, SearchSetData {
                 }
             }
             .padding(10)
+            
+//            ScrollView(.horizontal) {
+//                VStack(alignment: .leading, spacing: 0) {
+//                    ForEach(codeLines.indices, id: \.self) { idx in
+//                        HStack(spacing: 2) {
+//                            Text("\(idx+1)")
+//                                .frame(width: self.lineNumberColumnWidth, alignment: .trailing)
+//                                .font(.custom("Menlo", size: 12))
+//                                .foregroundColor(.white)
+//                                .padding(EdgeInsets(top: 0, leading: 2, bottom: 0, trailing: 2))
+//                                .background(.blue)
+//                            Text(syntaxHighlight(String(codeLines[idx])))
+//                                .frame(maxWidth: .infinity, alignment: .leading)
+//                                .font(.custom("Menlo", size: 12))
+//                                .background(highlightRows.contains(idx+1) ? .yellow : Color.clear)
+//                        }
+//                    }
+//                }
+//            }
+//            .padding(10)
+            
         }
         .background(bgColor)
         .cornerRadius(5)

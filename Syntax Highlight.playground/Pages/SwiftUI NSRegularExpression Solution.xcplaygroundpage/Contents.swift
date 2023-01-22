@@ -48,11 +48,15 @@ struct CodeBlockView: View, SearchSetData {
                 String(c)
             } as [String]).joined()
 
-        let ofRange = NSRange(originalText.startIndex..<originalText.endIndex,
-                              in: originalText)
+        let ofRange = NSRange(location: 0, length: originalText.count)
 
         // Same as ...
         //        let ofRange = NSMakeRange(0, originalText.count)
+        //
+        //        or
+        //
+        //        let ofRange = NSRange(originalText.startIndex..<originalText.endIndex,
+        //          in: originalText)
 
         regex.enumerateMatches(in: originalText, range: ofRange) { (match, _, stop) in
             guard let match = match else { return }
@@ -96,7 +100,7 @@ struct CodeBlockView: View, SearchSetData {
                 .stroke(borderColor, lineWidth: 1)
             HStack(spacing: 5) {
                 if (self.showLineNumber) {
-                    VStack(alignment: .trailing) {
+                    VStack(alignment: .trailing, spacing: 0) {
                         ForEach(codeLines.indices, id: \.self) { idx in
                             Text("\(idx+1)")
                                 .font(.custom("Menlo", size: 12))

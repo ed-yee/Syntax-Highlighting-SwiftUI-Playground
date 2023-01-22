@@ -120,7 +120,7 @@ struct CodeBlockView: View {
                 .stroke(borderColor, lineWidth: 1)
             HStack(spacing: 5) {
                 if (self.showLineNumber) {
-                    VStack(alignment: .trailing) {
+                    VStack(alignment: .trailing, spacing: 0) {
                         ForEach(codeLines.indices, id: \.self) { idx in
                             Text("\(idx+1)")
                                 .font(.custom("Menlo", size: 12))
